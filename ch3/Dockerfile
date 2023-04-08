@@ -1,24 +1,31 @@
-# Copyright 2021 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Go binaries are standalone, so use a multi-stage build to produce smaller images.
 
-FROM golang:1.12.9-alpine3.10 as builder
-COPY app.go .
-RUN go build -o /app .
+# Use base golang image from Docker Hub
+FROM golang:1.19 as build
 
-FROM alpine:3.10
-# Define GOTRACEBACK to mark this container as using the Go language runtime
-# for `skaffold debug` (https://skaffold.dev/docs/workflows/debug/).
+WORKDIR /scd-ongcp
+
+# Install dependencies in go.mod and go.sum
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy rest of the application source code
+COPY . ./
+
+# Compile the application to /app.
+# Skaffold passes in debug-oriented compiler flags
+ARG SKAFFOLD_GO_GCFLAGS
+RUN echo "Go gcflags: ${SKAFFOLD_GO_GCFLAGS}"
+RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -mod=readonly -v -o /app
+
+# Now create separate deployment image
+FROM gcr.io/distroless/base
+
+# Definition of this variable is used by 'skaffold debug' to identify a golang binary.
+# Default behavior - a failure prints a stack trace for the current goroutine.
+# See https://golang.org/pkg/runtime/
 ENV GOTRACEBACK=single
-CMD ["./app"]
-COPY --from=builder /app .
+
+WORKDIR /scd-ongcp
+COPY --from=build /app .
+ENTRYPOINT ["./app"]
