@@ -3,10 +3,10 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>hello-world</artifactId>
+  <artifactId>java-scdongcp</artifactId>
   <packaging>jar</packaging>
-  <name>Cloud Code Hello World</name>
-  <description>Getting started with Cloud Code</description>
+  <name>Secure CD on GCP</name>
+  <description>Secure Continuous Delivery on GCP</description>
   <version>1.0.0</version>
 
   <parent>
