@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-scdongcp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-scdongcp
+  template:
+    metadata:
+      labels:
+        app: java-scdongcp
+    spec:
+      containers:
+      - name: server
+        image: java-scdongcp
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        - name: TARGET
+          value: dev
+        # This environment variable enables debugging support for the container.
+        # Remove this to disable the debug build.
+        - name: JAVA_TOOL_OPTIONS
+          value: -agentlib:jdwp=transport=dt_socket,server=y,address=5005,suspend=n,quiet=y
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-scdongcp-external
+spec:
+  type: LoadBalancer
+  selector:
+    app: java-scdongcp
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
