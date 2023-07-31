@@ -1,0 +1,9 @@
+# Replace variables with appropriate variables
+
+gcloud artifacts repositories create VIRTUAL-REPOSITORY-NAME \
+    --project=PROJECT_ID \
+    --repository-format=FORMAT \
+    --mode=virtual-repository \
+    --location=LOCATION \
+    --description="DESCRIPTION" \
+    --upstream-policy-file=UPSTREAM_POLICY_FILE
