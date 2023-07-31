@@ -1,5 +1,5 @@
 # Build runtime image.
-FROM openjdk:11.0.16-jre-slim
+FROM eclipse-temurin:11-jre-alpine
 
 # Copy the compiled files over.
 COPY  /target/ /app/
