@@ -1,14 +1,12 @@
 steps:
 - name: maven:3-eclipse-temurin-17
   entrypoint: mvn
-  args: ["verify", "--fail-never"]
+  args: ["-Dtest=DemoApplicationTests","test"]
   id: test
 - name: maven:3-eclipse-temurin-17
   entrypoint: mvn
   args: ["package", "-Dmaven.test.skip=true"]
-  waitFor: ['test']
   id: package
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '.', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/ch6-scdongcp:${COMMIT_SHA}', '-f', 'Dockerfile']
-  waitFor: ['package']
+  args: ['build', '.', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/ch6-scdongcp', '-f', 'Dockerfile']
   id: build
