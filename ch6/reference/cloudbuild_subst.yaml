@@ -1,0 +1,22 @@
+steps:
+- name: maven:3-eclipse-temurin-17
+  entrypoint: mvn
+  args: ["-Dtest=DemoApplicationTests","test"]
+  id: test
+- name: maven:3-eclipse-temurin-17
+  entrypoint: mvn
+  args: ["package", "-Dmaven.test.skip=true"]
+  id: package
+  waitFor: ['test']
+- name: gcr.io/k8s-skaffold/skaffold
+  args:
+    - skaffold
+    - build
+    - '--interactive=false'
+    - '--file-output=/workspace/artifacts.json'
+    - '--default-repo=$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO'
+    - '--push=true'
+  id: skaffold-build
+  waitFor: ['package']
+images:
+- $_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/$_IMAGE
