@@ -2,7 +2,7 @@ import com.example.HelloController;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class HelloControllerTest {
+public class DemoApplicationTests {
 
 	@Test
 	public void testHello() {
