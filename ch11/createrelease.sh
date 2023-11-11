@@ -2,7 +2,7 @@
 echo "Building image for 1st release"
 echo
 ###
-skaffold build --default-repo=us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo --file-output=artifacts.json
+skaffold build --push=true --default-repo=us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo --file-output=artifacts.json
 ###
 echo "Creating 1st release"
 echo
