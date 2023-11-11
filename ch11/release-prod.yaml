@@ -1,0 +1,10 @@
+steps:
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
+    [
+       "deploy", "releases", "promote", "--delivery-pipeline",
+       "-pipeline", "--release", "scdongcp-rel", 
+       "--region", "yourregion"
+    ]
+

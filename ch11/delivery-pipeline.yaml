@@ -1,0 +1,56 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name:scd-on-gcp-pipeline
+description: delivery pipeline for CD on GCP demo with Skaffold profiles
+serialPipeline:
+  stages:
+  - targetId: qa
+    profiles:
+    - qa
+  - targetId: prod
+    profiles:
+    - prod
+    strategy:
+      canary:
+        runtimeConfig:
+          kubernetes:
+            gatewayServiceMesh:
+              httpRoute: "scdongcp-route"
+              service: "scdongcp-app"
+              deployment: "scdongcp-app"
+              routeUpdateWaitTime: 60s
+        canaryDeployment:
+          percentages: [50]
+          verify: false
+---
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: prod
+description: Prod Cluster (GCP)
+requireApproval: true
+gke:
+  cluster: projects/yourproject/locations/yourlocation/clusters/prodcluster
+---
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: qa
+description: QA Cluster (GCP)
+gke:
+  cluster: projects/yourproject/locations/yourlocation/clusters/qacluster
