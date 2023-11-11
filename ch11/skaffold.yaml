@@ -16,7 +16,7 @@ apiVersion: skaffold/v4beta4
 kind: Config
 build:
   artifacts:
-    - image: scdongcp-app
+    - image: scdongcp-e2e
       context: scdongcp-app
 manifests:
   kustomize:
