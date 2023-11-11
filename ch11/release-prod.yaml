@@ -4,7 +4,7 @@ steps:
   args:
     [
        "deploy", "releases", "promote", "--delivery-pipeline",
-       "-pipeline", "--release", "scdongcp-rel", 
+       "scd-on-gcp-pipeline", "--release", "scdongcp-rel", 
        "--region", "us-central1"
     ]
 
