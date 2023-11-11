@@ -5,7 +5,7 @@ steps:
     - build
     - '--interactive=false'
     - '--file-output=/workspace/artifacts.json'
-    - '--default-repo=yourrepo'
+    - '--default-repo=us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo'
     - '--push=true'
   id: skaffold-build
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -14,7 +14,7 @@ steps:
     [
       "deploy", "releases", "create", "scdongcp-rel",
       "--delivery-pipeline", "-pipeline",
-      "--region", "yourregion",
+      "--region", "us-central1",
       "--annotations", "commitId=${REVISION_ID}",
       "--build-artifacts", "/workspace/artifacts.json"
     ]

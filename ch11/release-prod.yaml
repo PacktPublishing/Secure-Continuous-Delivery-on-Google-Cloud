@@ -5,6 +5,6 @@ steps:
     [
        "deploy", "releases", "promote", "--delivery-pipeline",
        "-pipeline", "--release", "scdongcp-rel", 
-       "--region", "yourregion"
+       "--region", "us-central1"
     ]
 

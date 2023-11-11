@@ -16,7 +16,7 @@ apiVersion: deploy.cloud.google.com/v1
 kind: DeliveryPipeline
 metadata:
   name: scd-on-gcp-pipeline
-description: delivery pipeline for CD on GCP demo with Skaffold profiles
+description: Secure CD on Google Cloud - End to end pipeline
 serialPipeline:
   stages:
   - targetId: qa
@@ -45,7 +45,7 @@ metadata:
 description: Prod Cluster (GCP)
 requireApproval: true
 gke:
-  cluster: projects/yourproject/locations/yourlocation/clusters/prodcluster
+  cluster: projects/$PROJECT_ID/locations/us-central1/clusters/prod-cluster
 ---
 apiVersion: deploy.cloud.google.com/v1
 kind: Target
@@ -53,4 +53,4 @@ metadata:
   name: qa
 description: QA Cluster (GCP)
 gke:
-  cluster: projects/yourproject/locations/yourlocation/clusters/qacluster
+  cluster: projects/$PROJECT_ID/locations/us-central1/clusters/qa-cluster
