@@ -33,7 +33,7 @@ serialPipeline:
               httpRoute: "scdongcp-route"
               service: "scdongcp-app"
               deployment: "scdongcp-app"
-              routeUpdateWaitTime: 60s
+              routeUpdateWaitTime: 120s
         canaryDeployment:
           percentages: [50]
           verify: false
