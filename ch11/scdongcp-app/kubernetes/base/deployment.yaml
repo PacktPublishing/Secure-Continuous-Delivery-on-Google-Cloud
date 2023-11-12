@@ -16,36 +16,39 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: scdongcp-app
+  name: java-scdongcp
   labels:
-    app: scdongcp-app
+    app: java-scdongcp
 spec:
   ports:
   - name: http
     port: 80
-    targetPort: 8081
+    targetPort: 8080
   selector:
-    app: scdongcp-app
+    app: java-scdongcp
   type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: scdongcp-app
+  name: java-scdongcp
   labels:
-    app: scdongcp-app
+    app: java-scdongcp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: scdongcp-app
+      app: java-scdongcp
   template:
     metadata:
       labels:
-        app: scdongcp-app
+        app: java-scdongcp
     spec:
       containers:
-      - name: scdongcp-app
-        image: scdongcp-app
+      - name: server
+        image: java-scdongcp
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"

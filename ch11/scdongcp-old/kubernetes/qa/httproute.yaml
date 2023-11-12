@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: apps/v1
-kind: Deployment
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1beta1
 metadata:
-  name: java-scdongcp
+  name: scdongcp-route
 spec:
-  template:
-    spec:
-      containers:
-        - name: java-scdongcp
-          env:
-            - name: TARGET
-              value: qa
+  parentRefs:
+  - kind: Gateway
+    name: scdongcp-gateway
+  rules:
+  - backendRefs:
+    - name: scdongcp-app
+      port: 80

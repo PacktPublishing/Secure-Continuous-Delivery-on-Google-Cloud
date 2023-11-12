@@ -15,13 +15,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: scdongcp-app
+  name: java-scdongcp
 spec:
   replicas: 3
   template:
     spec:
       containers:
-        - name: scdongcp-app
+        - name: java-scdongcp
           env:
             - name: TARGET
               value: prod

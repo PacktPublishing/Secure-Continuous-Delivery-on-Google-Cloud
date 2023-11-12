@@ -22,5 +22,5 @@ spec:
     name: scdongcp-gateway
   rules:
   - backendRefs:
-    - name: scdongcp-app
+    - name: java-scdongcp
       port: 80

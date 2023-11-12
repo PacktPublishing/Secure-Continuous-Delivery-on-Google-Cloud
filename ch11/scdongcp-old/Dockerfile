@@ -12,15 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: java-scdongcp
-spec:
-  template:
-    spec:
-      containers:
-        - name: java-scdongcp
-          env:
-            - name: TARGET
-              value: qa
+FROM golang:1.12.9-alpine3.10 as builder
+COPY app.go .
+RUN go build -o /app .
+
+FROM alpine:3.10
+# Define GOTRACEBACK to mark this container as using the Go language runtime
+# for `skaffold debug` (https://skaffold.dev/docs/workflows/debug/).
+ENV GOTRACEBACK=single
+CMD ["./app"]
+COPY --from=builder /app .

@@ -31,8 +31,8 @@ serialPipeline:
           kubernetes:
             gatewayServiceMesh:
               httpRoute: "scdongcp-route"
-              service: "scdongcp-app"
-              deployment: "scdongcp-app"
+              service: "java-scdongcp"
+              deployment: "java-scdongcp"
               routeUpdateWaitTime: 120s
         canaryDeployment:
           percentages: [50]
