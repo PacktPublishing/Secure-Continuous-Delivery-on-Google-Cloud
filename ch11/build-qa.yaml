@@ -19,7 +19,5 @@ steps:
       "--build-artifacts", "/workspace/artifacts.json"
     ]
   waitFor: ['skaffold-build']
-images:
-- us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/java-scdongcp
 options:
   requestedVerifyOption: VERIFIED
