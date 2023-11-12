@@ -17,6 +17,8 @@ kind: Config
 build:
   artifacts:
     - image: java-scdongcp
+      context: .
+      jib: {}
 manifests:
   kustomize:
     paths:
