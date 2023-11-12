@@ -1,0 +1,35 @@
+steps:
+- name: maven:3-eclipse-temurin-17
+  entrypoint: mvn
+  args: ["-Dtest=DemoApplicationTests","test"]
+  id: test
+- name: maven:3-eclipse-temurin-17
+  entrypoint: mvn
+  args: ["package", "-Dmaven.test.skip=true"]
+  id: package
+  waitFor: ['test']
+- name: gcr.io/k8s-skaffold/skaffold
+  args:
+    - skaffold
+    - build
+    - '--interactive=false'
+    - '--file-output=/workspace/artifacts.json'
+    - '--default-repo=us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo'
+    - '--push=true'
+  id: skaffold-build
+  waitFor: ['package']
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
+    [
+      "deploy", "releases", "create", "first-release",
+      "--delivery-pipeline", "scd-on-gcp-pipeline",
+      "--region", "us-central1",
+      "--annotations", "commitId=${REVISION_ID}",
+      "--build-artifacts", "/workspace/artifacts.json"
+    ]
+  waitFor: ['skaffold-build']
+images:
+- us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/java-scdongcp
+options:
+  requestedVerifyOption: VERIFIED

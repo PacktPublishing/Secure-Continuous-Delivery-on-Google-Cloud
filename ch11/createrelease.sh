@@ -1,11 +1,7 @@
 #!/bin/bash
-echo "Building image for 1st release"
-echo
-###
-skaffold build --push=true --default-repo=us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo --file-output=artifacts.json
-###
 echo "Creating 1st release"
 echo
-gcloud deploy releases create first-release --delivery-pipeline scd-on-gcp-pipeline --region us-central1 --build-artifacts artifacts.json
+###
+gcloud builds submit --region=us-central1 --project=$PROJECT_ID --config first-release.yaml
 ###
 echo "Release creation completed, please promote and approve your release manually"

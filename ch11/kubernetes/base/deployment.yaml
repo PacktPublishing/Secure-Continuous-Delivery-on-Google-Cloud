@@ -45,7 +45,7 @@ spec:
         app: java-scdongcp
     spec:
       containers:
-      - name: server
+      - name: java-scdongcp
         image: java-scdongcp
         ports:
         - containerPort: 8080

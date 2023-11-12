@@ -17,19 +17,18 @@ kind: Config
 build:
   artifacts:
     - image: java-scdongcp
-      context: scdongcp-app
 manifests:
   kustomize:
     paths:
-      - scdongcp-app/kubernetes/dev
+      - kubernetes/dev
 profiles:
 - name: qa
   manifests:
     kustomize:
       paths:
-        - scdongcp-app/kubernetes/qa
+        - kubernetes/qa
 - name: prod
   manifests:
     kustomize:
       paths:
-        - scdongcp-app/kubernetes/prod
+        - kubernetes/prod
