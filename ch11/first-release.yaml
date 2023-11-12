@@ -27,7 +27,7 @@ steps:
   entrypoint: gcloud
   args:
     [
-      "deploy", "releases", "create", "scdongcp-rel",
+      "deploy", "releases", "create", "first-release",
       "--delivery-pipeline", "scd-on-gcp-pipeline",
       "--region", "us-central1",
       "--annotations", "commitId=${REVISION_ID}",
