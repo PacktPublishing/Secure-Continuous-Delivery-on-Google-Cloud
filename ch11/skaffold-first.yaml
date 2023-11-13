@@ -12,7 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.12.9
-COPY app.go .
-RUN go build -o /app .
-CMD ["./app"]
+apiVersion: skaffold/v4beta4
+kind: Config
+build:
+  artifacts:
+    - image: scdongcp-app
+      context: scdongcp-app
+      docker:
+        dockerfile: refDockerfile 
+manifests:
+  kustomize:
+    paths:
+      - scdongcp-app/kubernetes/dev
