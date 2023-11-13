@@ -1,12 +1,12 @@
 steps:
 - name: gcr.io/k8s-skaffold/skaffold
+  entrypoint: /bin/bash
   args:
-    - skaffold
-    - build
-    - '--interactive=false'
-    - '--file-output=/workspace/artifacts.json'
-    - '--default-repo=us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo'
-    - '--push=true'
+    - -c
+    - |
+      skaffold build --interactive=false --file-output=/workspace/artifacts.json --default-repo=us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo --push=true
+      docker image inspect us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/scdongcp-app --format '{{index .RepoDigests 0}}' > image-digest.txt &&
+      cat image-digest.txt
   id: skaffold-build
 - name: gcr.io/$PROJECT_ID/kritis-signer
   entrypoint: /bin/bash
