@@ -21,7 +21,7 @@ steps:
     -kms_key_name=${_KMS_KEY_NAME} \
     -kms_digest_alg=${_KMS_DIGEST_ALG} \
     -note_name=${_NOTE_NAME}
-  waitFor: skaffold-build
+  waitFor: ['skaffold-build']
   id: vuln-scanner
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: gcloud

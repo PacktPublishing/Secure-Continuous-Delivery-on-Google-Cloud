@@ -12,7 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.12.9
+FROM golang:1.12.9-alpine3.10 as builder
 COPY app.go .
 RUN go build -o /app .
+
+FROM alpine:3.10
 CMD ["./app"]
+COPY --from=builder /app .
