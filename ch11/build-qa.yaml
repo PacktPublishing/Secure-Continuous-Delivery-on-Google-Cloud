@@ -35,7 +35,7 @@ steps:
     ]
   waitFor: ['vuln-scanner']
 images:
-- us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/scdongcp-app
+- us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/scdongcp-app:${SHORT_SHA}
 options:
   requestedVerifyOption: VERIFIED
 
