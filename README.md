@@ -1,2 +1,2 @@
-# Securing-Continuous-Delivery-on-Google-Cloud-
-Securing Continuous Delivery on Google Cloud, published by Packt
+# Secure-Continuous-Delivery-on-Google-Cloud-
+Secure Continuous Delivery on Google Cloud, published by Packt
