@@ -1,0 +1,34 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: packt-deploy-pipeline
+description: main application pipeline for Packt sample
+serialPipeline:
+  stages:
+  - targetId: qa
+    profiles: [qa]
+    strategy:
+      standard:
+        postdeploy:
+          actions: ["postdeploy-action"]
+  - targetId: prod
+    profiles: [prod]
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: qa
+description: qa cluster
+gke:
+  cluster: projects/${PROJECT_ID}/locations/us-central1/clusters/qa-cluster
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: prod
+description: production cluster
+requireApproval: true
+gke:
+  cluster: projects/riccardo-blog-test-v1/locations/us-central1/clusters/prod-cluster1
