@@ -1,0 +1,51 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: packt-deploy-pipeline
+description: main application pipeline for Packt sample
+serialPipeline:
+  stages:
+  - targetId: qa
+    profiles: [qa]
+    strategy:
+      standard:
+        postdeploy:
+          actions: ["postdeploy-action"]
+  - targetId: prod
+    profiles: [prod]
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: qa
+description: qa cluster
+gke:
+  cluster: projects/${PROJECT_ID}/locations/us-central1/clusters/qa-cluster
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: prod
+description: production cluster
+requireApproval: true
+gke:
+  cluster: projects/${PROJECT_ID}/locations/us-central1/clusters/prod-cluster1
+
+---
+apiVersion: deploy.cloud.google.com/v1
+kind: Automation
+metadata:
+  name: packt-deploy-pipeline/promote
+description: promotes a release from QA to PROD
+suspended: false
+serviceAccount: <PROJECT_ID>-compute@developer.gserviceaccount.com
+selector:
+- target:
+  id: qa
+rules:
+- promoteRelease:
+    name: "promote-release"
+    wait: 1m
+    toTargetId: "@next"
