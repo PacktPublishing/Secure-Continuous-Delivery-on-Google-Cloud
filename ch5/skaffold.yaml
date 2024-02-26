@@ -4,7 +4,7 @@ metadata:
   name: scdongcp-app
 build:
   artifacts:
-    - image: ch6-scdongcp
+    - image: scdongcp-app
       docker:
         dockerfile: Dockerfile
 manifests:

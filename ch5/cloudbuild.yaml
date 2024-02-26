@@ -4,8 +4,8 @@ steps:
   args: ["package", "-Dmaven.test.skip=true"]
   id: package
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '.', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/ch6-scdongcp', '-f', 'Dockerfile']
+  args: ['build', '.', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/scdongcp-app', '-f', 'Dockerfile']
   id: build
   waitFor: ['package']
 images:
-- us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/ch6-scdongcp
+- us-central1-docker.pkg.dev/$PROJECT_ID/scdbook-repo/scdongcp-app
