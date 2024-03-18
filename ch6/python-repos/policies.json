@@ -1,10 +1,10 @@
 [{
     "id" : "upstream1",
-    "repository" : "projects/riccardo-blog-test-v1/locations/us-central1/repositories/python-local",
+    "repository" : "projects/$PROJECT_ID/locations/us-central1/repositories/python-local",
     "priority" : 100
     }, {
     "id" : "upstream2",
-    "repository" : "projects/riccardo-blog-test-v1/locations/us-central1/repositories/python-pypi",
+    "repository" : "projects/$PROJECT_ID/locations/us-central1/repositories/python-pypi",
     "priority" : 80
     }]
     
